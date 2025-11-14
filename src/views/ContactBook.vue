@@ -1,21 +1,29 @@
+<!-- src/views/ContactBook.vue -->
 <template>
-  <div class="page row">
-    <div class="col-md-10">
+  <div class="container page">
+    <!-- Tìm kiếm -->
+    <div class="search-bar">
       <InputSearch v-model="searchText" />
     </div>
-    <div class="mt-3 col-md-6">
-      <h4>
-        Danh bạ
-        <i class="fas fa-address-book"></i>
+
+    <!-- Danh bạ -->
+    <div class="mt-3">
+      <h4 class="d-flex align-items-center">
+        Danh bạ <i class="fas fa-address-book ml-2"></i>
       </h4>
+
       <ContactList
         v-if="filteredContactsCount > 0"
         :contacts="filteredContacts"
         v-model:activeIndex="activeIndex"
       />
       <p v-else>Không có liên hệ nào.</p>
-      <div class="mt-3 row justify-content-around align-items-center">
-        <button class="btn btn-sm btn-primary" @click="refreshList()">
+
+      <!-- Nhóm nút hành động -->
+      <div
+        class="mt-3 d-flex justify-content-around flex-nowrap action-buttons"
+      >
+        <button class="btn btn-sm btn-primary" @click="refreshList">
           <i class="fas fa-redo"></i> Làm mới
         </button>
         <button class="btn btn-sm btn-success" @click="goToAddContact">
@@ -26,27 +34,36 @@
         </button>
       </div>
     </div>
-    <div class="mt-3 col-md-6">
-      <div v-if="activeContact">
-        <h4>
-          Chi tiết Liên hệ
-          <i class="fas fa-address-card"></i>
-        </h4>
-        <ContactCard :contact="activeContact" />
-        <router-link
-          :to="{
-            name: 'contact.edit',
-            params: { id: activeContact._id },
-          }"
-        >
-          <span class="mt-2 badge badge-warning">
-            <i class="fas fa-edit"></i> Hiệu chỉnh</span
-          >
-        </router-link>
-      </div>
+
+    <!-- Chi tiết liên hệ -->
+    <div class="mt-4" v-if="activeContact">
+      <h4 class="d-flex align-items-center">
+        Chi tiết Liên hệ <i class="fas fa-address-card ml-2"></i>
+      </h4>
+      <ContactCard :contact="activeContact" />
+      <router-link
+        :to="{ name: 'contact.edit', params: { id: activeContact._id } }"
+      >
+        <span class="mt-2 badge badge-warning d-inline-flex align-items-center">
+          <i class="fas fa-edit mr-1"></i> Hiệu chỉnh
+        </span>
+      </router-link>
     </div>
   </div>
 </template>
+
+<style scoped>
+.search-bar {
+  max-width: 100%;
+}
+
+.action-buttons button {
+  white-space: nowrap; /* giữ nút không xuống dòng */
+  flex: 1 1 auto;
+  margin: 0 5px;
+}
+</style>
+
 <script>
 import ContactCard from "@/components/ContactCard.vue";
 import InputSearch from "@/components/InputSearch.vue";
@@ -128,8 +145,9 @@ export default {
 };
 </script>
 <style scoped>
+
 .page {
-  text-align: left;
-  max-width: 750px;
+text-align: left;
+max-width: 750px;
 }
 </style>

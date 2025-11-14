@@ -28,5 +28,14 @@ export default {
       <i v-if="contact.favorite" class="fas fa-check"></i>
       <i v-else class="fas fa-times"></i>
     </div>
+    <!-- Thêm hai dòng mới ở đây -->
+    <div class="p-1">
+      <strong>Sở thích:</strong>
+      {{ contact.hobbies }}
+    </div>
+    <div class="p-1">
+      <strong>Tình trạng hôn nhân:</strong>
+      {{ contact.maritalStatus }}
+    </div>
   </div>
 </template>
